@@ -64,8 +64,11 @@ const Auth = () => {
       
       toast({
         title: "Registration successful",
-        description: "You can now log in with your credentials.",
+        description: "You can now log in.",
       });
+      
+      // Automatically navigate to the main app after successful registration
+      navigate('/');
     } catch (error: any) {
       toast({
         title: "Registration failed",
