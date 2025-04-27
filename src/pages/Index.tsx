@@ -2,9 +2,11 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Task } from '@/types/task';
-import { AddTaskDialog } from '@/components/AddTaskDialog';
-import { TaskCard } from '@/components/TaskCard';
 import { useToast } from '@/components/ui/use-toast';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ActiveTasks } from '@/components/ActiveTasks';
+import { TaskHistory } from '@/components/TaskHistory';
+import { UserProfile } from '@/components/UserProfile';
 
 export default function Index() {
   const [tasks, setTasks] = React.useState<Task[]>([]);
@@ -42,25 +44,28 @@ export default function Index() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="container py-8">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-custom-text">Task Manager</h1>
-          <AddTaskDialog onAddTask={handleAddTask} />
-        </div>
-        <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {tasks.map((task) => (
-            <TaskCard
-              key={task.id}
-              task={task}
+        <h1 className="text-3xl font-bold text-custom-text mb-8">Task Manager</h1>
+        <Tabs defaultValue="tasks" className="w-full">
+          <TabsList className="grid w-full grid-cols-3 mb-8">
+            <TabsTrigger value="tasks">Tasks</TabsTrigger>
+            <TabsTrigger value="history">History</TabsTrigger>
+            <TabsTrigger value="profile">Profile</TabsTrigger>
+          </TabsList>
+          <TabsContent value="tasks">
+            <ActiveTasks 
+              tasks={tasks}
+              onAddTask={handleAddTask}
               onComplete={handleCompleteTask}
             />
-          ))}
-          {tasks.length === 0 && (
-            <div className="col-span-full text-center py-12 bg-white rounded-lg shadow">
-              <p className="text-gray-500">No tasks yet. Click "Add New Task" to get started!</p>
-            </div>
-          )}
-        </div>
+          </TabsContent>
+          <TabsContent value="history">
+            <TaskHistory tasks={tasks} />
+          </TabsContent>
+          <TabsContent value="profile">
+            <UserProfile />
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );
-};
+}
