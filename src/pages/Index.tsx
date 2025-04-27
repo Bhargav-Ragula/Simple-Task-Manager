@@ -1,14 +1,15 @@
-
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Task } from '@/types/task';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ActiveTasks } from '@/components/ActiveTasks';
 import { TaskHistory } from '@/components/TaskHistory';
+import { Celebration } from '@/components/Celebration';
 
 export default function Index() {
   const [tasks, setTasks] = React.useState<Task[]>([]);
+  const [showCelebration, setShowCelebration] = React.useState(false);
   const { toast } = useToast();
 
   const handleAddTask = (taskData: Omit<Task, 'id' | 'status' | 'createdAt'>) => {
@@ -34,14 +35,14 @@ export default function Index() {
           : task
       )
     );
-    toast({
-      title: "Task completed",
-      description: "Great job! The task has been marked as complete.",
-    });
+    setShowCelebration(true);
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {showCelebration && (
+        <Celebration onComplete={() => setShowCelebration(false)} />
+      )}
       <div className="container py-8">
         <h1 className="text-3xl font-bold text-custom-text mb-8">Task Manager</h1>
         <Tabs defaultValue="tasks" className="w-full">
@@ -64,4 +65,3 @@ export default function Index() {
     </div>
   );
 }
-
