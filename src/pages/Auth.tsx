@@ -50,7 +50,8 @@ const Auth = () => {
     setLoading(true);
 
     try {
-      const { error } = await supabase.auth.signUp({
+      // Sign up the user
+      const { error: signUpError } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -60,14 +61,22 @@ const Auth = () => {
         },
       });
 
-      if (error) throw error;
+      if (signUpError) throw signUpError;
+
+      // Immediately sign in the user after successful registration
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (signInError) throw signInError;
       
       toast({
         title: "Registration successful",
-        description: "You can now log in.",
+        description: "Welcome to the app!",
       });
       
-      // Automatically navigate to the main app after successful registration
+      // Navigate to the main app
       navigate('/');
     } catch (error: any) {
       toast({
