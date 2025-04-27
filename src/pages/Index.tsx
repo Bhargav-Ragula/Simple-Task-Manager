@@ -6,7 +6,6 @@ import { useToast } from '@/components/ui/use-toast';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ActiveTasks } from '@/components/ActiveTasks';
 import { TaskHistory } from '@/components/TaskHistory';
-import { UserProfile } from '@/components/UserProfile';
 
 export default function Index() {
   const [tasks, setTasks] = React.useState<Task[]>([]);
@@ -46,10 +45,9 @@ export default function Index() {
       <div className="container py-8">
         <h1 className="text-3xl font-bold text-custom-text mb-8">Task Manager</h1>
         <Tabs defaultValue="tasks" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 mb-8">
+          <TabsList className="grid w-full grid-cols-2 mb-8">
             <TabsTrigger value="tasks">Tasks</TabsTrigger>
             <TabsTrigger value="history">History</TabsTrigger>
-            <TabsTrigger value="profile">Profile</TabsTrigger>
           </TabsList>
           <TabsContent value="tasks">
             <ActiveTasks 
@@ -61,11 +59,9 @@ export default function Index() {
           <TabsContent value="history">
             <TaskHistory tasks={tasks} />
           </TabsContent>
-          <TabsContent value="profile">
-            <UserProfile />
-          </TabsContent>
         </Tabs>
       </div>
     </div>
   );
 }
+
