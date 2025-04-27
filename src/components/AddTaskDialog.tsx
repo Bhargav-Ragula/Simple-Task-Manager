@@ -136,7 +136,7 @@ export const AddTaskDialog: React.FC<AddTaskDialogProps> = ({ onAddTask }) => {
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
+                    <PopoverContent className="w-auto p-0 bg-white" align="start">
                       <Calendar
                         mode="single"
                         selected={field.value}
@@ -179,4 +179,4 @@ export const AddTaskDialog: React.FC<AddTaskDialogProps> = ({ onAddTask }) => {
       </DialogContent>
     </Dialog>
   );
-};
+}
